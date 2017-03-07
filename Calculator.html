@@ -1,0 +1,86 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	function resetPage(){
+		$("#item1").val("");
+		$("#item2").val("");
+		$("#item3").val("");
+		$("#result").html("");
+		$("#errorMessageCustom").val("");
+		$("#errorMessage").value("");
+		
+		$("#result").hide();
+		$("#errorMessageCustom").hide();
+		$("#errorMessage").hide();
+	}
+
+    function showError(errorMessage) {
+      $("#errorMessageCustom").innerHTML = errorMessage;
+    }
+	
+	function calculate(){
+		var x = $("#item1").val();
+		var y = $("#item2").val();
+		//var operator = $("#item3").val();
+		var operator = $("#operationsLb").val();
+		alert(operator);
+		performMath(x, y, operator);
+		return false;
+	}
+
+	function performMath(x, y, operator){
+		var x = 3;
+		var y = 8;
+		var operator = "*";
+		var result = "";
+		if(operator == "+"){
+			result = x + y; 
+		}
+		else if(operator == "-"){
+			result = x - y; 
+		}
+		else if(operator == "/"){
+			result = x / y; 
+		}
+		else if(operator == "*"){
+			result = x * y; 
+		}
+		else{
+			showError("Invalid operation");
+		}
+		//alert("Answer: " + x + operator + y + " = " + result);
+		result = result + 99;
+		if(result != ""){
+			//document.getElementById("result").innerHTML = result;
+			//result = "Answer: " + x + operator + y + " = " + result;
+			$("#result").html("Answer: " + result);
+			$("#result").show();
+		}
+		return false;
+	}
+    
+</script>
+</head>
+<body>
+<!-- <form name="form1" action="#" onsubmit="calculate(item1.value, item2.value, item3.value)"> -->
+	<label>Enter 2 digits and an operation to calculate</label><br/><br/><br/>
+	<input type="text" name="item1" id="item1" value="5"/><br/><br/>
+	<input type="text" name="item3" id="item3" value="*"/><br/><br/>
+	<select id="operationsLb">
+		<option value="+">Add</option>
+		<option value="-">Subtract</option>
+		<option value="*">Multiply</option>
+		<option value="/">Divide</option>
+	</select>
+	<input type="text" name="item2" id="item2" value="9"/><br/><br/>
+    <button id="submit" onclick="calculate()">Calculate</button>
+<!-- </form> -->
+
+<button id="clearResults" onclick = "resetPage()">clear</button>
+<p id="result"/>
+<p id="errorMessageCustom"/>
+<p id="errorMessage" style="display:none">Invalid operation</p>
+</body>
+</html>
