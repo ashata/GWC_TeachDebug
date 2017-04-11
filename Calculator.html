@@ -1,86 +1,111 @@
 <html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript"> 
 	
-	function resetPage(){
-		$("#item1").val("");
-		$("#item2").val("");
-		$("#item3").val("");
-		$("#result").html("");
-		$("#errorMessageCustom").val("");
-		$("#errorMessage").value("");
+			//If the user clicks clear button, reset the listbox, textboxes and any error or results on the page
+			//$("#item1") ---> finds the HTML element with id "item1", 
+			//$("#item1").val() ---> gets the value entered in "item1",
+			//$("#item1").val("") or or $("#result").html() ---> sets the value inside "item1"/"result1"
+			function resetPage(){
+				$("#item1").val("");
+				$("#item2").val("");
+				$("#operationsLb").val("");
+				
+				$("#result").html("");
+				$("#errorMessageCustom").val("");
+			
+				$("#result").hide();
+				$("#errorMessageCustom").hide();
+			}
+
+			//user friendly error messages to let them know what was wrong
+			function showError(errorMessage) {
+				errorMessage = $("#errorMessageCustom").html() + "<br>" + errorMessage;
+				$("#errorMessageCustom").html(errorMessage);
+				$("#errorMessageCustom").show();
+			}
 		
-		$("#result").hide();
-		$("#errorMessageCustom").hide();
-		$("#errorMessage").hide();
-	}
+			//simple function that reads what values are entered in the textboxes and listbox
+			function calculate(){
+				$("#errorMessageCustom").html("");
+				$("#result").html("");
+				var firstNumber = $("#item1").val();
+				var secondNumber = $("#item2").val();
+				//var operator = $("#item3").val();
+				var operator = $("#operationsLb").val();
+				//alert("Numbers entered: " + x + ", " + y + " and operation: " + operator);
+				
+				if(!firstNumber || !secondNumber){
+					showError("Please enter 2 numbers to calculate");
+				}
+				if(!operator){
+					showError("Please select a math operation from the dropdown list");
+				}
+				else{
+					performMath(firstNumber, secondNumber, operator);
+				}
+				return false;
+			}
 
-    function showError(errorMessage) {
-      $("#errorMessageCustom").innerHTML = errorMessage;
-    }
-	
-	function calculate(){
-		var x = $("#item1").val();
-		var y = $("#item2").val();
-		//var operator = $("#item3").val();
-		var operator = $("#operationsLb").val();
-		alert(operator);
-		performMath(x, y, operator);
-		return false;
-	}
+			function performMath(x, y, operator){
+				var x = 3;
+				var y = 8;
+				var operator = "*";
+				var result = "";
+				if(operator == "+"){
+					result = x + y; 
+				}
+				else if(operator == "-"){
+					result = x - y; 
+				}
+				else if(operator == "/"){
+					result = x / y; 
+				}
+				else if(operator == "*"){
+					result = x * y; 
+				}
+				else if(operator == "^"){
+					showError("Please write a function to calculate power of numbers");
+				}
 
-	function performMath(x, y, operator){
-		var x = 3;
-		var y = 8;
-		var operator = "*";
-		var result = "";
-		if(operator == "+"){
-			result = x + y; 
-		}
-		else if(operator == "-"){
-			result = x - y; 
-		}
-		else if(operator == "/"){
-			result = x / y; 
-		}
-		else if(operator == "*"){
-			result = x * y; 
-		}
-		else{
-			showError("Invalid operation");
-		}
-		//alert("Answer: " + x + operator + y + " = " + result);
-		result = result + 99;
-		if(result != ""){
-			//document.getElementById("result").innerHTML = result;
-			//result = "Answer: " + x + operator + y + " = " + result;
-			$("#result").html("Answer: " + result);
-			$("#result").show();
-		}
-		return false;
-	}
-    
-</script>
-</head>
-<body>
-<!-- <form name="form1" action="#" onsubmit="calculate(item1.value, item2.value, item3.value)"> -->
-	<label>Enter 2 digits and an operation to calculate</label><br/><br/><br/>
-	<input type="text" name="item1" id="item1" value="5"/><br/><br/>
-	<input type="text" name="item3" id="item3" value="*"/><br/><br/>
-	<select id="operationsLb">
-		<option value="+">Add</option>
-		<option value="-">Subtract</option>
-		<option value="*">Multiply</option>
-		<option value="/">Divide</option>
-	</select>
-	<input type="text" name="item2" id="item2" value="9"/><br/><br/>
-    <button id="submit" onclick="calculate()">Calculate</button>
-<!-- </form> -->
-
-<button id="clearResults" onclick = "resetPage()">clear</button>
-<p id="result"/>
-<p id="errorMessageCustom"/>
-<p id="errorMessage" style="display:none">Invalid operation</p>
-</body>
+				//alert("Answer: " + x + operator + y + " = " + result);
+				result = result + 99;
+				if(result != ""){
+					//document.getElementById("result").innerHTML = result;
+					//result = "Answer: " + x + operator + y + " = " + result;
+					$("#result").html("Answer: " + result);
+					$("#result").show();
+				}
+				return false;
+			}
+			
+			function powerOf(number, power){
+				return "";
+			}
+		</script>
+	</head>
+	<body>
+		<label style="color:blue">Enter 2 numbers and an operation to calculate</label><br/><br/><br/>
+		<!--textbox to enter the first number-->
+		<input type="text" name="item1" id="item1" value="5"/><br/><br/>
+		<!-- A listbox with basic math operations -->
+		<select id="operationsLb">
+			<option value="+">Add</option>
+			<option value="-">Subtract</option>
+			<option value="*">Multiply</option>
+			<option value="/">Divide</option>
+			<option value="^">Power of</option>
+		</select>
+		<!--textbox to enter the first number-->
+		<br/><br/><input type="text" name="item2" id="item2" value="9"/><br/><br/>
+		
+		<!--When this button is clicked, it calls calculate() function in the javascript section-->
+		<button id="submit" onclick="calculate()">Calculate</button>
+		<!--When this button is clicked, it calls calculate() function in the javascript section-->
+		<button id="clearResults" onclick = "resetPage()">clear</button>
+		<!--placeholder tags to display result and error messages-->
+		<p id="result" style="color:green"/>
+		<p id="errorMessageCustom" style="color:red"/>
+	</body>
 </html>
